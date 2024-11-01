@@ -18,10 +18,15 @@ configure_ubuntu_debian_firewall() {
     # Open only the specified ports
     ufw allow 21/tcp       # Allow FTP
     ufw allow 22/tcp       # Allow SSH
+    ufw allow 67/tcp       # DHCP
+    ufw allow 68/tcp       # DHCP
     ufw allow 80/tcp       # Allow HTTP
     ufw allow 443/tcp      # Allow HTTPS
+    ufw allow 445/tcp	   # Allow SMB
     ufw allow 3000/tcp     # Allow Grafana
     ufw allow 3306/tcp     # Allow MySQL
+    ufw allow 5985/tcp     # FTP
+    ufw allow 5986/tcp	   # FTP
 
     # Enable UFW
     ufw enable             
@@ -46,10 +51,14 @@ configure_rocky_firewall() {
     # Open only the specified ports and services
     firewall-cmd --permanent --add-port=21/tcp      # Allow FTP
     firewall-cmd --permanent --add-port=22/tcp      # Allow SSH
+    firewall-cmd --permanent --add-port=67/tcp      # Allow DHCP
+    firewall-cmd --permanent --add-port=68/tcp      # Allow DHCP
     firewall-cmd --permanent --add-service=http     # Allow HTTP
     firewall-cmd --permanent --add-service=https    # Allow HTTPS
+    firewall-cmd --permanent --add-service=ftp	    # Allow FTP		
     firewall-cmd --permanent --add-port=3000/tcp    # Allow Grafana
     firewall-cmd --permanent --add-port=3306/tcp    # Allow MySQL
+    firewall-cmd --permanent --add-service=samba    # Allow SMB	
 
     # Reload firewalld to apply changes
     firewall-cmd --reload
@@ -72,10 +81,15 @@ configure_freebsd_firewall() {
     # Allow only the specified ports
     echo "pass in proto tcp from any to any port 21" >> /etc/pf.conf    # Allow FTP
     echo "pass in proto tcp from any to any port 22" >> /etc/pf.conf    # Allow SSH
+    echo "pass in proto tcp from any to any port 67" >> /etc/pf.conf    # Allow DHCP
+    echo "pass in proto tcp from any to any port 68" >> /etc/pf.conf    # Allow DHCP
     echo "pass in proto tcp from any to any port 80" >> /etc/pf.conf    # Allow HTTP
     echo "pass in proto tcp from any to any port 443" >> /etc/pf.conf   # Allow HTTPS
     echo "pass in proto tcp from any to any port 3000" >> /etc/pf.conf  # Allow Grafana
     echo "pass in proto tcp from any to any port 3306" >> /etc/pf.conf  # Allow MySQL
+    echo "pass in proto tcp from any to any port 445" >> /etc/pf.conf  # Allow SMB
+    echo "pass in proto tcp from any to any port 5985" >> /etc/pf.conf  # FTP
+    echo "pass in proto tcp from any to any port 5986" >> /etc/pf.conf  # FTP
 
     # Load new rules and enable pf if not already enabled
     pfctl -f /etc/pf.conf
