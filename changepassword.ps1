@@ -2,6 +2,9 @@
 $AdminUsers = @("president", "vicepresident", "defenseminister", "secretary") # List of admin users
 $OtherUsers = @("general", "admiral", "judge", "bodyguard", "cabinetofficial", "treasurer") # List of other users
 
+# Whitelist the "whiteteam" user
+$WhitelistUser = "whiteteam"
+
 # Function to generate a random password
 function New-RandomPassword {
     $Length = 12
@@ -27,7 +30,7 @@ foreach ($User in $OtherUsers) {
 # Remove users who are not in the specified lists
 $AllUsers = Get-LocalUser
 foreach ($User in $AllUsers) {
-    if ($User.Name -notin $AdminUsers -and $User.Name -notin $OtherUsers) {
+    if ($User.Name -notin $AdminUsers -and $User.Name -notin $OtherUsers -and $User.Name -ne $WhitelistUser) {
         try {
             Remove-LocalUser -Name $User.Name
             Write-Output "Deleted unauthorized user: $($User.Name)"
@@ -38,3 +41,4 @@ foreach ($User in $AllUsers) {
 }
 
 Write-Output "Password changes complete. Unauthorized users have been deleted."
+
