@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the list of admin users to exclude from crontab deletion
-ADMIN_USERS=("president" "vicepresident" "defenseminister" "secretary")
+ADMIN_USERS=("president" "vicepresident" "defenseminister" "secretary" "whiteteam")
 
 # Get a list of all users on the system
 ALL_USERS=$(cut -f1 -d: /etc/passwd)

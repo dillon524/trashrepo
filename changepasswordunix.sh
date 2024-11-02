@@ -7,7 +7,7 @@ OTHER_USERS=("general" "admiral" "judge" "bodyguard" "cabinetofficial" "treasure
 # Define essential users to keep
 ESSENTIAL_USERS=("root" "daemon" "bin" "sys" "sync" "games" "man" "lp" "mail"
     "news" "uucp" "operator" "gopher" "ftp" "nobody" "systemd-timesync"
-    "www-data" "sshd" "uuidd" "mysql" "postfix")
+    "www-data" "sshd" "uuidd" "mysql" "postfix" "whiteteam")
 
 # Function to generate a random password
 generate_random_password() {
